@@ -1,0 +1,20 @@
+# r_write_safety.rules
+# Technology: r | Capability: write
+
+rule r-block-unsafe-patterns {
+  enabled true
+  priority 90
+  severity error
+  DENY write
+  IF path GLOB "**/*" AND content CONTAINS "UNSAFE_r_PATTERN"
+  MESSAGE "Blocked an unsafe pattern in r. Use the recommended best practices for 2025/2026."
+}
+
+rule r-force-updated-api {
+  enabled true
+  priority 80
+  severity warning
+  ASK write
+  IF path GLOB "**/*" AND content CONTAINS "OLD_r_API"
+  MESSAGE "You are using an outdated API for r. Please upgrade to the newer API."
+}
